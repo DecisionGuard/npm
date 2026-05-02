@@ -1,0 +1,81 @@
+{
+  "name": "decisionguard-sdk",
+  "version": "0.1.0",
+  "description": "DecisionGuard runtime governance SDK for TypeScript/JavaScript agent frameworks",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./langchain": {
+      "import": "./dist/langchain-tools.mjs",
+      "require": "./dist/langchain-tools.js",
+      "types": "./dist/langchain-tools.d.ts"
+    },
+    "./langgraph": {
+      "import": "./dist/langgraph-node.mjs",
+      "require": "./dist/langgraph-node.js",
+      "types": "./dist/langgraph-node.d.ts"
+    },
+    "./openai-agents": {
+      "import": "./dist/openai-agents.mjs",
+      "require": "./dist/openai-agents.js",
+      "types": "./dist/openai-agents.d.ts"
+    },
+    "./workflow": {
+      "import": "./dist/workflow-wrapper.mjs",
+      "require": "./dist/workflow-wrapper.js",
+      "types": "./dist/workflow-wrapper.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "decisionguard",
+    "ai-governance",
+    "agent",
+    "langchain",
+    "langgraph",
+    "openai",
+    "guardrails",
+    "llm",
+    "agentic"
+  ],
+  "license": "MIT",
+  "homepage": "https://decision-guard.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DecisionGuard/npm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DecisionGuard/npm/issues"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@langchain/core": ">=0.1.0",
+    "@langchain/langgraph": ">=0.0.1"
+  },
+  "peerDependenciesMeta": {
+    "@langchain/core": { "optional": true },
+    "@langchain/langgraph": { "optional": true }
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
