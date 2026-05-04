@@ -1,3 +1,4 @@
+/** DecisionGuard SDK v0.3.0 — shared type definitions. */
 export type ActorType = "agent" | "service" | "human" | "system";
 
 export type FactCheckVerdict = "PASS" | "FAIL" | "WARN" | "INCOMPLETE";
@@ -207,6 +208,61 @@ export interface IdentitySnapshot {
 export interface IdentityResponse {
   identity: IdentitySnapshot | null;
   message?: string;
+}
+
+export interface ReviewRequest {
+  change_type: string;
+  change_payload: Record<string, unknown>;
+  environment?: Environment | string;
+  intent?: { goal: string; proposed_action: string };
+  resource_name?: string;
+  actor_source?: string;
+  idempotency_key?: string;
+}
+
+export interface ReviewResponse {
+  data: {
+    review_id: string;
+    verdict: {
+      decision: string;
+      summary?: string;
+      conditions?: string[];
+    };
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
+export interface PendingApproval {
+  id: string;
+  review_id: string;
+  status: string;
+  requested_at: string;
+  [key: string]: unknown;
+}
+
+export interface PendingApprovalsResponse {
+  approvals: PendingApproval[];
+  count: number;
+}
+
+export interface ResolveApprovalRequest {
+  approved: boolean;
+  justification: string;
+  actor: {
+    system: string;
+    external_id: string;
+    name?: string;
+  };
+  conditions?: string[];
+  precedent?: boolean;
+  break_glass?: boolean;
+}
+
+export interface ResolveApprovalResponse {
+  status: string;
+  approval_id: string;
+  [key: string]: unknown;
 }
 
 export interface SecurityAuditResponse {

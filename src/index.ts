@@ -1,3 +1,4 @@
+/** DecisionGuard SDK v0.3.0 — public API surface. */
 export type {
   SecurityAuditRequest,
   SecurityAuditResponse,
@@ -29,6 +30,12 @@ export type {
   ListResourcesResponse,
   IdentitySnapshot,
   IdentityResponse,
+  ReviewRequest,
+  ReviewResponse,
+  PendingApproval,
+  PendingApprovalsResponse,
+  ResolveApprovalRequest,
+  ResolveApprovalResponse,
 } from "./types.js";
 
 export {
@@ -37,6 +44,7 @@ export {
   DGBlockedError,
   DGEscalatedError,
   enforceVerdict,
+  enforceReviewVerdict,
 } from "./dg-client.js";
 export type { DGClientConfig } from "./dg-client.js";
 
