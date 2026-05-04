@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1 (2026-05-04)
+
+### Fixed
+
+- **Fact-check timeout**: `factCheck()` now uses a minimum 120 s timeout (overridable via second `timeoutMs` arg) to prevent read timeouts during AI model calls
+
 ## 0.4.0 (2026-05-04)
 
 ### Breaking

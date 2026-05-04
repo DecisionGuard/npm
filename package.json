@@ -1,6 +1,6 @@
 {
   "name": "decisionguard-sdk",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "DecisionGuard runtime governance SDK for TypeScript/JavaScript agent frameworks",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

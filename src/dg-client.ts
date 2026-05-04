@@ -1,4 +1,4 @@
-/** DecisionGuard SDK v0.4.0 — runtime governance client for TypeScript/JavaScript. */
+/** DecisionGuard SDK v0.4.1 — runtime governance client for TypeScript/JavaScript. */
 import { randomUUID } from "node:crypto";
 import type {
   SecurityAuditRequest,
@@ -59,8 +59,8 @@ export class DecisionGuardClient {
     return this._post<SecurityAuditResponse>("/api/v1/skills/security-audit", body);
   }
 
-  async factCheck(input: FactCheckRequest): Promise<FactCheckResponse> {
-    return this._post<FactCheckResponse>("/api/v1/fact-check", input);
+  async factCheck(input: FactCheckRequest, timeoutMs?: number): Promise<FactCheckResponse> {
+    return this._post<FactCheckResponse>("/api/v1/fact-check", input, timeoutMs ?? Math.max(this.timeout, 120_000));
   }
 
   async getReview(reviewId: string): Promise<Record<string, unknown>> {
@@ -158,9 +158,9 @@ export class DecisionGuardClient {
     return this._post<ResolveApprovalResponse>(`/api/v1/approvals/${approvalId}/resolve`, body);
   }
 
-  private async _post<T>(path: string, body: unknown): Promise<T> {
+  private async _post<T>(path: string, body: unknown, timeoutOverride?: number): Promise<T> {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), this.timeout);
+    const timer = setTimeout(() => controller.abort(), timeoutOverride ?? this.timeout);
     try {
       const res = await fetch(`${this.baseUrl}${path}`, {
         method: "POST",
