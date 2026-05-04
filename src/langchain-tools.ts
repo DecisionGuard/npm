@@ -1,3 +1,4 @@
+/** DecisionGuard SDK v0.3.5 — LangChain tool wrapper. */
 import type { SecurityAuditRequest, AuditFacts } from "./types.js";
 import { DecisionGuardClient, enforceVerdict, DGBlockedError, DGEscalatedError } from "./dg-client.js";
 

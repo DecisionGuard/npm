@@ -1,4 +1,4 @@
-/** DecisionGuard SDK v0.3.0 — shared type definitions. */
+/** DecisionGuard SDK v0.3.5 — shared type definitions. */
 export type ActorType = "agent" | "service" | "human" | "system";
 
 export type FactCheckVerdict = "PASS" | "FAIL" | "WARN" | "INCOMPLETE";

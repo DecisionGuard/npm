@@ -1,3 +1,4 @@
+/** DecisionGuard SDK v0.3.5 — LangGraph state graph node. */
 import type { SecurityAuditRequest, SecurityAuditResponse, AuditFacts } from "./types.js";
 import { DecisionGuardClient, enforceVerdict } from "./dg-client.js";
 
@@ -97,11 +98,6 @@ export class DecisionGuardNode {
     };
   }
 
-  /**
-   * Returns a bound function suitable for passing directly to graph.addNode().
-   *
-   *   graph.addNode("dg-check", dgNode.asNode());
-   */
   asNode(): (state: Record<string, unknown>) => Promise<Record<string, unknown>> {
     return (state) => this.invoke(state);
   }

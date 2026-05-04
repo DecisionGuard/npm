@@ -1,3 +1,4 @@
+/** DecisionGuard SDK v0.3.5 — CI/workflow pipeline helpers. */
 import type { SecurityAuditRequest, SecurityAuditResponse } from "./types.js";
 import { DecisionGuardClient, enforceVerdict, DGBlockedError, DGEscalatedError } from "./dg-client.js";
 

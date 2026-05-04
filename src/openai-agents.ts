@@ -1,3 +1,4 @@
+/** DecisionGuard SDK v0.3.5 — OpenAI Agents SDK integration. */
 import type { SecurityAuditRequest } from "./types.js";
 import { DecisionGuardClient, enforceVerdict, DGBlockedError, DGEscalatedError } from "./dg-client.js";
 

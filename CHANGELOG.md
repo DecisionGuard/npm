@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.5 (2026-05-04)
+
+### Added
+- `review()` — submit governance reviews via POST /api/v1/reviews
+- `pollPendingApprovals()` — poll for pending approvals awaiting resolution
+- `resolveApproval()` — approve or deny a pending approval with justification
+- `enforceReviewVerdict()` — throw typed errors for BLOCK/REQUIRE_APPROVAL from review endpoint
+- Default base URL (`https://decision-guard.com`) in `fromEnv()` — `DG_BASE_URL` is now optional
+- New types: `ReviewRequest`, `ReviewResponse`, `PendingApproval`, `PendingApprovalsResponse`, `ResolveApprovalRequest`, `ResolveApprovalResponse`
+
+### Fixed
+- Auth header for review endpoint uses `Authorization: Bearer` (matching server expectations)
+
 ## 0.1.0 (2025-05-02)
 
 Initial release.

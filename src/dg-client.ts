@@ -1,4 +1,4 @@
-/** DecisionGuard SDK v0.3.0 — runtime governance client for TypeScript/JavaScript. */
+/** DecisionGuard SDK v0.3.5 — runtime governance client for TypeScript/JavaScript. */
 import type {
   SecurityAuditRequest,
   SecurityAuditResponse,

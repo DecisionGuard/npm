@@ -64,6 +64,45 @@ const response = await client.audit({
 });
 ```
 
+## Governance reviews
+
+Submit a governance review and enforce the verdict:
+
+```ts
+import { DecisionGuardClient, enforceReviewVerdict } from "decisionguard-sdk";
+
+const client = DecisionGuardClient.fromEnv();
+
+const result = await client.review({
+  changeType: "agentic_action",
+  changePayload: {
+    tool_name: "database",
+    summary: "Drop staging table",
+    params: { table: "stg_users" },
+  },
+  environment: "staging",
+  resourceName: "staging-db",
+});
+
+enforceReviewVerdict(result);  // throws on BLOCK or REQUIRE_APPROVAL
+```
+
+## Approval polling and resolution
+
+```ts
+const pending = await client.pollPendingApprovals();
+
+for (const approval of pending.approvals) {
+  const resolved = await client.resolveApproval(approval.id, {
+    approved: true,
+    justification: "Reviewed and approved by ops team",
+    actorSystem: "slack-bot",
+    actorExternalId: "U12345",
+    actorName: "Jane Doe",
+  });
+}
+```
+
 ## LangGraph
 
 `DecisionGuardNode` drops into any LangGraph state graph as a governance checkpoint:
@@ -256,7 +295,7 @@ try {
 | Variable | Required | Description |
 |---|---|---|
 | `DG_API_KEY` | Yes | Your tenant API key |
-| `DG_BASE_URL` | Yes | e.g. `https://decision-guard.com` |
+| `DG_BASE_URL` | No | API base URL (default: `https://decision-guard.com`) |
 
 ## Links
 
