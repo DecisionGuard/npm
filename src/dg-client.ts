@@ -1,4 +1,5 @@
-/** DecisionGuard SDK v0.3.5 — runtime governance client for TypeScript/JavaScript. */
+/** DecisionGuard SDK v0.4.0 — runtime governance client for TypeScript/JavaScript. */
+import { randomUUID } from "node:crypto";
 import type {
   SecurityAuditRequest,
   SecurityAuditResponse,
@@ -12,7 +13,6 @@ import type {
   BatchAuditResponse,
   ListResourcesResponse,
   IdentityResponse,
-  ReviewRequest,
   ReviewResponse,
   PendingApprovalsResponse,
   ResolveApprovalResponse,
@@ -106,21 +106,21 @@ export class DecisionGuardClient {
     environment?: string;
     intent?: { goal: string; proposedAction: string };
     resourceName?: string;
-    actorSource?: string;
+    actor?: { id: string; type?: string; authority_level?: string; source?: string };
     idempotencyKey?: string;
   }): Promise<ReviewResponse> {
     const body: Record<string, unknown> = {
       change_type: input.changeType,
       change_payload: input.changePayload,
       environment: input.environment ?? "production",
+      idempotency_key: input.idempotencyKey ?? `sdk-js-${randomUUID()}`,
     };
     if (input.intent) {
       body.intent = { goal: input.intent.goal, proposed_action: input.intent.proposedAction };
     }
     if (input.resourceName) body.resource_name = input.resourceName;
-    if (input.actorSource) body.actor_source = input.actorSource;
-    if (input.idempotencyKey) body.idempotency_key = input.idempotencyKey;
-    return this._postBearer<ReviewResponse>("/api/v1/reviews", body);
+    if (input.actor) body.actor = input.actor;
+    return this._post<ReviewResponse>("/api/v1/reviews", body);
   }
 
   async pollPendingApprovals(since?: string): Promise<PendingApprovalsResponse> {
@@ -156,26 +156,6 @@ export class DecisionGuardClient {
     if (options.precedent) body.precedent = true;
     if (options.breakGlass) body.break_glass = true;
     return this._post<ResolveApprovalResponse>(`/api/v1/approvals/${approvalId}/resolve`, body);
-  }
-
-  private async _postBearer<T>(path: string, body: unknown): Promise<T> {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), this.timeout);
-    try {
-      const res = await fetch(`${this.baseUrl}${path}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${this.apiKey}` },
-        body: JSON.stringify(body),
-        signal: controller.signal,
-      });
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new DGError(`DecisionGuard returned ${res.status}: ${text}`, res.status);
-      }
-      return (await res.json()) as T;
-    } finally {
-      clearTimeout(timer);
-    }
   }
 
   private async _post<T>(path: string, body: unknown): Promise<T> {

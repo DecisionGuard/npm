@@ -1,4 +1,4 @@
-/** DecisionGuard SDK v0.3.5 — public API surface. */
+/** DecisionGuard SDK v0.4.0 — public API surface. */
 export type {
   SecurityAuditRequest,
   SecurityAuditResponse,

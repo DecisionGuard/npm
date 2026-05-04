@@ -1,4 +1,4 @@
-/** DecisionGuard SDK v0.3.5 — shared type definitions. */
+/** DecisionGuard SDK v0.4.0 — shared type definitions. */
 export type ActorType = "agent" | "service" | "human" | "system";
 
 export type FactCheckVerdict = "PASS" | "FAIL" | "WARN" | "INCOMPLETE";
@@ -216,7 +216,7 @@ export interface ReviewRequest {
   environment?: Environment | string;
   intent?: { goal: string; proposed_action: string };
   resource_name?: string;
-  actor_source?: string;
+  actor?: { id: string; type?: string; authority_level?: string; source?: string };
   idempotency_key?: string;
 }
 

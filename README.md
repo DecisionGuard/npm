@@ -82,6 +82,7 @@ const result = await client.review({
   },
   environment: "staging",
   resourceName: "staging-db",
+  actor: { id: "my-agent", type: "agent", source: "api" },
 });
 
 enforceReviewVerdict(result);  // throws on BLOCK or REQUIRE_APPROVAL
@@ -126,7 +127,7 @@ const dgNode = new DecisionGuardNode(client, {
 });
 
 const graph = new StateGraph(...)
-  .addNode("dg-check", dgNode.asNode())   // ← drops in here
+  .addNode("dg-check", dgNode.asNode())   // drops in here
   .addNode("execute", executeNode)
   .addEdge("dg-check", "execute")
   ...
